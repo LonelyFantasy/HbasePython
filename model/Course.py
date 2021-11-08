@@ -3,7 +3,7 @@ import datetime
 
 
 class Course:
-    def __init__(self, course_id: int, course_name: str, credit: int, time: datetime, teacher: str, title: str):
+    def __init__(self, course_id: str, course_name: str, credit: int, time: datetime, teacher: str, title: str):
         self.course_id = course_id
         self.course_name = course_name
         self.credit = credit

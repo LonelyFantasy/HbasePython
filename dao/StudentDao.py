@@ -2,6 +2,7 @@
 import thrift
 import happybase
 
+import server.HBaseConnect
 from server.HBaseConnect import HBaseConnect
 
 course_list = []
@@ -25,7 +26,9 @@ def edit_password():
 
 
 def look_info():
-    pass
+    connection = server.HBaseConnect.HBaseConnect()
+    table = connection.connection.table("student", use_prefix=True)
+    table.row()
 
 
 def look_course():
@@ -33,4 +36,8 @@ def look_course():
 
 
 def out_course():
+    pass
+
+
+def check_profile():
     pass
