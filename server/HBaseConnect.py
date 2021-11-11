@@ -1,6 +1,10 @@
 # -*- coding: utf-8 -*-
 import happybase
-import thrift
+import model.ReturnValue as Value
+
+# Operate State
+SUCCESS = Value.SUCCESS
+FAILURE = Value.FAILURE
 
 
 class HBaseConnect:
@@ -23,5 +27,34 @@ class HBaseConnect:
 
     def stop(self):    # Stop To Connect
         self.connection.close()
+
+    def delete_table_row(self, table_name: str, row_id: str):
+        self.connection.open()
+        try:
+            table = self.get_table(table_name)
+            table.delete(row_id)
+            self.connection.close()
+            return SUCCESS
+        except Exception as e:
+            print(e)
+            return FAILURE
+
+    def get_double_table_dict(self, table_name: str):
+        first_list = {}
+        second_list = {}
+        self.connection.open()
+        try:
+            table = self.get_table(table_name)
+            for key, value in table.scan():
+                for key1 in value:
+                    #     print(str(key1, encoding='utf-8'))
+                    #     print(str(value[key1], encoding='utf-8'))
+                    second_list[str(key1, encoding='utf-8')] = str(value[key1], encoding='utf-8')
+                first_list[str(key, encoding='utf-8')] = second_list
+                print(first_list)
+            return first_list
+        except Exception as e:
+            print(e)
+            return FAILURE
 
 
